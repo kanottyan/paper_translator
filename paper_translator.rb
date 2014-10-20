@@ -28,11 +28,11 @@ class PaperTranslator
         print_status(i.to_f / @total_line_num)
 
         if !SKIP_CONDITION.any?{|c| c === line }
-          agent.add_pool(line)
-        elsif agent.pool_blank?
+          agent.cache.add!(line)
+        elsif agent.cache.blank?
           f.write(line + "\n\n")
         else
-          result = agent.translate_pool.map(&:first).join("\n")
+          result = agent.translate_cache.map(&:first).join("\n")
           f.write(result + "\n\n" + line + "\n\n")
         end
       end
