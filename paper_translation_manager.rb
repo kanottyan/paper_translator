@@ -1,21 +1,4 @@
 # encoding: utf-8
-DOCUMENT = <<-EOF
-
--- DOCUMENT --
-
-# About
-  英語で記述された論文など(pdf)を日本語に翻訳する
-
-# Requirement
-  * pdftotext -> brew install poppler
-  * mechanize -> gem install mechanize
-
-# Usage
-  * help    -> ruby paper_translation_manager.rb
-  * execute -> ruby paper_translation_manager.rb hoge.pdf
-
-EOF
-
 require 'shellwords'
 require './paper_formatter'
 require './paper_translator'
@@ -55,13 +38,11 @@ class PaperTranslationManager
 
 end
 
-if $0 == __FILE__ && ARGV.size.zero?
-  puts DOCUMENT
-end
-
 if $0 == __FILE__ && !ARGV.size.zero?
-  manager = PaperTranslationManager.new(ARGV.first)
-  manager.run_process!
+  ARGV.each do |path|
+    manager = PaperTranslationManager.new(path)
+    manager.run_process!
+  end
 end
 
 
